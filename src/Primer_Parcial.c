@@ -7,11 +7,114 @@
  Description : Hello World in C, Ansi-style
  ============================================================================
  */
-
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
+#include "vivienda.h"
+#include "censista.h"
+#include "utn_Input.h"
+
+#define TAMV 5
+#define TAMCEN 3
+#define TAMC 25
+
+//Variables generales
+
+int opcionMP;
+int rtn;
+int idMod;
+int idElim;
+int idModificado;
+int idEliminado;
+int idV = 20000;
 
 int main(void) {
-	puts("!!!Hello World!!!"); /* prints !!!Hello World!!! */
-	return EXIT_SUCCESS;
+	setbuf(stdout, NULL);
+
+	eVivienda vivienda[TAMV];
+	eVivienda* pVivienda;
+	pVivienda = vivienda;
+
+	eCensista censista[TAMCEN] = {{100, "Ana", 34, "1203-2345"},{101, "Juan", 24, "4301-54678"}, {102, "Sol", 47, "5902-37487"}};
+	eCensista* pCensista;
+	pCensista = censista;
+
+	rtn = iniciarVivienda(pVivienda,TAMV);
+	if(rtn == 1){
+		do{
+			printf("\n\n-----------------Bienvenido al censo 2022---------------------");
+			printf("\n\n1)ALTA VIVIENDA"
+					"\n2)MODIFICAR VIVIENDA"
+					"\n3)BAJA VIVIENDA"
+					"\n4)LISTAR VIVIENDA"
+					"\n5)LISTAR CENSISTA"
+					"\n6)SALIR"
+					"\nIngrese su opcion--->");
+			fflush(stdin);
+			scanf("%d", &opcionMP);
+
+			switch(opcionMP){
+				case 1:
+						idV++;
+						for(int i=0;i<TAMV;i++){
+							altaVivienda(pVivienda, TAMV, idV);
+							break;
+						}
+
+					break;
+
+				case 2:
+						rellenarInt(&idMod, "\nIngrese el ID de la vivienda a modificar: \n--->", "\nError! Reintente ---> ");
+
+						idModificado = modificarVivienda(pVivienda, TAMV, idMod);
+
+						if(idModificado == 1){
+							printf("\n\nEl usuario ha sido modificado con exito");
+						} else {
+							printf("\nEl ID de la vivienda no ha sido encontrado");
+						}
+
+					break;
+
+				case 3:
+						rellenarInt(&idElim, "\nIngrese el ID de la vivienda a eliminar: \n--->", "\nError! Reintente ---> ");
+
+						idEliminado = eliminarVivienda(pVivienda, TAMV, idElim);
+
+						if(idEliminado == 1){
+							printf("\nEl usuario ha sido eliminado con exito\n");
+						} else {
+							printf("\nEl ID de la vivienda no ha sido encontrado");
+						}
+
+					break;
+
+				case 4:
+						listaVivienda(pVivienda, TAMV);
+
+					break;
+
+				case 5:
+						listaCensista(pCensista, TAMCEN);
+
+					break;
+
+				case 6:
+					printf("\nSaliendo del sistema!!!");
+					break;
+
+				default:
+					printf("\nLa opcion NO es valida, reintentar!!!");
+					break;
+			}
+
+		}while(opcionMP != 6);
+
+	} else {
+		printf("Hubo un problema al cargar el sistema!!!");
+	}
+
+	return 0;
 }
