@@ -12,7 +12,7 @@
 
 #include "vivienda.h"
 
-//eCensista censista[3] = {{100, "Ana", 34, 1203-2345},{101, "Juan", 24, 4301-54678}, {102, "Sol", 47, 5902-37487}};
+
 void listaCensista(eCensista* censista, int len){
 
 	eCensista listaAux;
@@ -29,10 +29,10 @@ void listaCensista(eCensista* censista, int len){
 		}
 	}
 	printf("\n-------------------CENSISTAS-----------------------");
-	printf("\n  LEGAJO ||   NOMBRE ||   EDAD   || TELEFONO  ");
+	printf("\n\n  LEGAJO  |   NOMBRE  |   EDAD  | TELEFONO  ");
 	for(int i=0; i<len; i++){
-		printf("\n-------------------------------------------------------"
-				"\n   %d        %s           %d        %s   ",
+		printf("\n------------------------------------------------"
+				"\n   %d    |   %s     |   %d    | %s   ",
 				(censista+i)->legajo,(censista+i)->nombre, (censista+i)->edad,(censista+i)->telefono);
 	}
 }

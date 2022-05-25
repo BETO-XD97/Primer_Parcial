@@ -19,6 +19,7 @@
 #define TAMV 5
 #define TAMCEN 3
 #define TAMC 25
+#define MAX 1000000
 
 //Variables generales
 
@@ -29,6 +30,7 @@ int idElim;
 int idModificado;
 int idEliminado;
 int idV = 20000;
+int datoUno = 0;
 
 int main(void) {
 	setbuf(stdout, NULL);
@@ -37,7 +39,10 @@ int main(void) {
 	eVivienda* pVivienda;
 	pVivienda = vivienda;
 
-	eCensista censista[TAMCEN] = {{100, "Ana", 34, "1203-2345"},{101, "Juan", 24, "4301-54678"}, {102, "Sol", 47, "5902-37487"}};
+	eCensista censista[TAMCEN] = {{100, "Ana", 34, "1203-2345"},
+								  {101, "Juan", 24, "4301-54678"},
+								  {102, "Sol", 47, "5902-37487"}
+								 };
 	eCensista* pCensista;
 	pCensista = censista;
 
@@ -62,47 +67,58 @@ int main(void) {
 							altaVivienda(pVivienda, TAMV, idV);
 							break;
 						}
-
+						datoUno = 1;
 					break;
 
 				case 2:
-						rellenarInt(&idMod, "\nIngrese el ID de la vivienda a modificar: \n--->", "\nError! Reintente ---> ");
+						if(datoUno == 1){
+							rellenarInt(&idMod, "\nIngrese el ID de la vivienda a modificar: \n--->", "\nError! Reintente ---> ", 0, MAX);
 
-						idModificado = modificarVivienda(pVivienda, TAMV, idMod);
+							idModificado = modificarVivienda(pVivienda, TAMV, idMod);
 
-						if(idModificado == 1){
-							printf("\n\nEl usuario ha sido modificado con exito");
+							if(idModificado == 1){
+								printf("\n\nEl usuario ha sido modificado con exito");
+							} else {
+								printf("\nEl ID de la vivienda no ha sido encontrado o no fue encontrado");
+							}
 						} else {
-							printf("\nEl ID de la vivienda no ha sido encontrado");
+							printf("\nNo ha ingresado ningun dato!");
 						}
-
 					break;
 
 				case 3:
-						rellenarInt(&idElim, "\nIngrese el ID de la vivienda a eliminar: \n--->", "\nError! Reintente ---> ");
+						if(datoUno == 1){
+							rellenarInt(&idElim, "\nIngrese el ID de la vivienda a eliminar: \n--->", "\nError! Reintente ---> ", 0, MAX);
 
-						idEliminado = eliminarVivienda(pVivienda, TAMV, idElim);
+							idEliminado = eliminarVivienda(pVivienda, TAMV, idElim);
 
-						if(idEliminado == 1){
-							printf("\nEl usuario ha sido eliminado con exito\n");
+							if(idEliminado == 1){
+								printf("\nEl usuario ha sido eliminado con exito\n");
+							} else {
+								printf("\nEl ID de la vivienda no ha sido encontrado o fue eliminado");
+							}
 						} else {
-							printf("\nEl ID de la vivienda no ha sido encontrado");
+							printf("\nNo ha ingresado ningun dato!");
 						}
-
 					break;
 
 				case 4:
-						listaVivienda(pVivienda, TAMV);
-
+						if(datoUno == 1){
+							listaVivienda(pVivienda, TAMV);
+						} else {
+							printf("\nNo ha ingresado ningun dato!");
+						}
 					break;
 
 				case 5:
+
 						listaCensista(pCensista, TAMCEN);
 
 					break;
 
 				case 6:
-					printf("\nSaliendo del sistema!!!");
+
+						printf("\nSaliendo del sistema!!!");
 					break;
 
 				default:

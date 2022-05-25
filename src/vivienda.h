@@ -21,7 +21,7 @@ typedef struct{
 	int cantPersonas;
 	int cantHabitaciones;
 	int tipoVivienda;
-	eCensista legajoCensista;
+	int legajoCensista;
 	int isEmpty;
 
 } eVivienda;

@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <conio.h>
 
 #include "censista.h"
 #include "vivienda.h"
@@ -16,8 +17,11 @@
 
 #define OCUPADO 1
 #define DESOCUPADO 0
+#define MAX 1000000
+#define TAMC 25
 
 int opcionMM;
+int valChar;
 
 int iniciarVivienda(eVivienda* vivienda, int len){
 	int retorno;
@@ -61,18 +65,20 @@ void altaVivienda(eVivienda* vivienda, int len, int idV){
 			printf("\n-----------------Ingreso de datos---------------------------\n");
 			(vivienda+i)->idVivienda = idV;
 			printf("%d", (vivienda+i)->idVivienda);
-			rellenarChar((vivienda+i)->calle,"\n\nIngrese la calle: \n---> ");
+			do{
+				valChar = rellenarChar((vivienda+i)->calle,"\n\nIngrese la calle: \n---> ", TAMC);
+			}while(valChar != 0);
 			strupr((vivienda+i)->calle);
-			rellenarInt(&(vivienda+i)->cantPersonas, "\nIngrese la cantidad de personas en la vivienda: \n---> ", "\nError! Reintente--->");
-			rellenarInt(&(vivienda+i)->cantHabitaciones, "\nIngrese la cantidad de habitaciones en la vivienda: \n---> ", "\nError! Reintente--->");
-			rellenarInt(&(vivienda+i)->tipoVivienda, "\n1)CASA\n2)DEPARTAMENTO\n3)CASILLA\n4)RANCHO\nIngrese el tipo de vivienda: \n--->", "\nError! Reintente--->");
-			rellenarInt(&(vivienda+i)->legajoCensista.legajo, "\nIngrese el legajo del censista: \n--->", "\nError! Reintente--->");
+			rellenarInt(&(vivienda+i)->cantPersonas, "\nIngrese la cantidad de personas en la vivienda: \n---> ", "\nError! Reintente ---> ", 1, MAX);
+			rellenarInt(&(vivienda+i)->cantHabitaciones, "\nIngrese la cantidad de habitaciones en la vivienda: \n---> ", "\nError! Reintente ---> ", 1, MAX);
+			rellenarInt(&(vivienda+i)->tipoVivienda, "\n1)CASA\n2)DEPARTAMENTO\n3)CASILLA\n4)RANCHO\nIngrese el tipo de vivienda: \n--->", "\nError! Reintente ---> ", 1, 4);
+			rellenarInt(&(vivienda+i)->legajoCensista, "\nIngrese el legajo del censista-> 100-Ana / 101-Juan / 102-Sol \n--->", "\nError! Reintente ---> ", 100, 102);
 			(vivienda+i)->isEmpty = OCUPADO;
 		break;
 			}
 		}
 	} else {
-		printf("Hubo un error!!!");
+		printf("Hubo un error!");
 	}
 }
 
@@ -90,22 +96,24 @@ int modificarVivienda(eVivienda* vivienda, int len, int idMod){
 							"\n3-Cantidad de habitaciones en la vivienda."
 							"\n4-Tipo de vivienda."
 							"\n5-Salir"
-							"\n\nIngrese la opcion a modificar: ");
+							"\n\nIngrese la opcion a modificar ---> ");
 					scanf("%d", &opcionMM);
 					fflush(stdin);
 					switch(opcionMM){
 						case 1:
 							printf("\nEl nombre de la calle a modificar es: %s", (vivienda+i)->calle);
-							rellenarChar((vivienda+i)->calle, "\nIngrese el nuevo nombre de la calle: ");
+							do{
+								valChar = rellenarChar((vivienda+i)->calle,"\n\nIngrese la calle: \n---> ", TAMC);
+							}while(valChar != 0);
 							strupr((vivienda+i)->calle);
 							break;
 						case 2:
 							printf("\nLa cantidad de personas en la vivienda son: %d", (vivienda+i)->cantPersonas);
-							rellenarInt(&(vivienda+i)->cantPersonas, "\nIngrese la cantidad de personas actualizada: ", "\nError! Reingrese: ");
+							rellenarInt(&(vivienda+i)->cantPersonas, "\nIngrese la cantidad de personas actualizada: ", "\nError! Reingrese ---> ",0,MAX);
 							break;
 						case 3:
 							printf("\nLa cantidad de habitaciones en la vivienda son: %d", (vivienda+i)->cantHabitaciones);
-							rellenarInt(&(vivienda+i)->cantHabitaciones, "\nIngrese la cantidad de habitaciones actualizada: ", "\nError! Reingrese: ");
+							rellenarInt(&(vivienda+i)->cantHabitaciones, "\nIngrese la cantidad de habitaciones actualizada: ", "\nError! Reingrese ---> ",0,MAX);
 							break;
 						case 4:
 							printf("\nEl tipo de vivienda a modificar es");
@@ -122,7 +130,7 @@ int modificarVivienda(eVivienda* vivienda, int len, int idMod){
 									}
 								}
 							}
-							rellenarInt(&(vivienda+i)->tipoVivienda, "\n1)CASA\n2)DEPARTAMENTO\n3)CASILLA\n4)RANCHO\nIngrese el nuevo tipo de vivienda: ", "\nError!, Reingrese: ");
+							rellenarInt(&(vivienda+i)->tipoVivienda, "\n1)CASA\n2)DEPARTAMENTO\n3)CASILLA\n4)RANCHO\nIngrese el nuevo tipo de vivienda: ", "\nError! Reingrese ---> ",1,4);
 							break;
 						case 5:
 							printf("\nVolviendo al menu principal...");
@@ -165,7 +173,7 @@ void listaVivienda(eVivienda* vivienda, int len){
 	for(int i=0; i<len; i++){
 		for(int j=i+1; j<len; j++){
 			if((vivienda+i)->isEmpty == OCUPADO && (vivienda+j)->isEmpty == OCUPADO){
-				if((strcmp((vivienda+i)->calle, (vivienda+j)->calle))>0){ // || (vivienda+i)->tipoVivienda < (vivienda+1)->tipoVivienda
+				if((strcmp((vivienda+i)->calle, (vivienda+j)->calle))>0){
 					listaAux = vivienda[i];
 					vivienda[i] = vivienda[j];
 					vivienda[j] = listaAux;
@@ -181,13 +189,13 @@ void listaVivienda(eVivienda* vivienda, int len){
 	}
 
 	printf("\n\n-----------------Lista de viviendas--------------------------");
-	printf("\n VIVIENDA   ||        CALLE        || PERSONAS || HABITACIONES  ||   TIPO DE VIVIENDA   ");
+	printf("\n\n VIVIENDA   |  L.CENSISTA  |      CALLE        | PERSONAS | HABITACIONES  |   TIPO DE VIVIENDA  ");
 	if(vivienda != NULL && len > 0){
 		for(int i=0; i<len; i++){
 			if((vivienda+i)->isEmpty == OCUPADO){
 				printf("\n------------------------------------------------------------------------------------------------------");
-				printf("\n   %d         %s                  %d             %d                ",
-						(vivienda+i)->idVivienda, (vivienda+i)->calle, (vivienda+i)->cantPersonas, (vivienda+i)->cantHabitaciones);
+				printf("\n   %d    |      %d     | %s           |     %d    |      %d        |         ",
+						(vivienda+i)->idVivienda,(vivienda+i)->legajoCensista, (vivienda+i)->calle, (vivienda+i)->cantPersonas, (vivienda+i)->cantHabitaciones);
 				if((vivienda+i)->tipoVivienda == 1){
 					printf("CASA");
 				} else {
