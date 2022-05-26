@@ -47,6 +47,7 @@ int main(void) {
 	pCensista = censista;
 
 	rtn = iniciarVivienda(pVivienda,TAMV);
+
 	if(rtn == 1){
 		do{
 			printf("\n\n-----------------Bienvenido al censo 2022---------------------");
@@ -79,7 +80,7 @@ int main(void) {
 							if(idModificado == 1){
 								printf("\n\n\nEl usuario ha sido modificado con exito");
 							} else {
-								printf("\nEl ID de la vivienda no ha sido encontrado o no fue encontrado");
+								printf("\nEl ID de la vivienda no ha sido encontrado");
 							}
 						} else {
 							printf("\nNo ha ingresado ningun dato!");
