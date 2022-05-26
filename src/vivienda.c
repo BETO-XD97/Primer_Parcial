@@ -149,20 +149,30 @@ int modificarVivienda(eVivienda* vivienda, int len, int idMod){
 }
 
 int eliminarVivienda(eVivienda* vivienda, int len, int idElim){
-	int id;
-	int retorno = 0;
+	int id, opcion;
+	int retorno;
 	id = buscarVivienda(vivienda, len, idElim);
 
 	if(vivienda != NULL && len > 0){
 		for(int i=0; i<len; i++){
-			if((vivienda+i)->idVivienda == id && (vivienda+i)->isEmpty == OCUPADO){
-				(vivienda+i)->isEmpty = DESOCUPADO;
-				retorno = 1;
+			if((vivienda+i)->idVivienda == id){
+				rellenarInt(&opcion, "\nSeguro que desea eliminar esta ID 1-Si / 2-No \n---> ", "\nError! Reintentar ---> ", 1, 2);
+				if(opcion == 1){
+					if((vivienda+i)->idVivienda == id && (vivienda+i)->isEmpty == OCUPADO){
+						(vivienda+i)->isEmpty = DESOCUPADO;
+						retorno = 1;
+						break;
+					}
+				} else {
+					retorno = 2;
+					break;
+				}
+			} else {
+				retorno = 3;
 				break;
 			}
 		}
 	}
-
 	return retorno;
 }
 
@@ -178,7 +188,7 @@ void listaVivienda(eVivienda* vivienda, int len){
 					vivienda[i] = vivienda[j];
 					vivienda[j] = listaAux;
 				} else {
-					if(strcmp((vivienda+i)->calle, (vivienda+j)->calle) == 0 && (vivienda+i)->tipoVivienda < (vivienda+j)->tipoVivienda){
+					if(strcmp((vivienda+i)->calle, (vivienda+j)->calle) == 0 && (vivienda+i)->cantPersonas > (vivienda+j)->cantPersonas){
 						listaAux = vivienda[i];
 						vivienda[i] = vivienda[j];
 						vivienda[j] = listaAux;
@@ -188,28 +198,36 @@ void listaVivienda(eVivienda* vivienda, int len){
 		}
 	}
 
+
+}
+
+void imprimirVivienda(eVivienda* vivienda, int len){
+
+	listaVivienda(vivienda,len);
+
 	printf("\n\n-----------------Lista de viviendas--------------------------");
-	printf("\n\n VIVIENDA   |  L.CENSISTA  |      CALLE        | PERSONAS | HABITACIONES  |   TIPO DE VIVIENDA  ");
-	if(vivienda != NULL && len > 0){
-		for(int i=0; i<len; i++){
-			if((vivienda+i)->isEmpty == OCUPADO){
-				printf("\n------------------------------------------------------------------------------------------------------");
-				printf("\n   %d    |      %d     | %s           |     %d    |      %d        |         ",
-						(vivienda+i)->idVivienda,(vivienda+i)->legajoCensista, (vivienda+i)->calle, (vivienda+i)->cantPersonas, (vivienda+i)->cantHabitaciones);
-				if((vivienda+i)->tipoVivienda == 1){
-					printf("CASA");
-				} else {
-					if((vivienda+i)->tipoVivienda == 2){
-						printf("DEPARTAMENTO");
+		printf("\n\n VIVIENDA   |  L.CENSISTA  |      CALLE        | PERSONAS | HABITACIONES  |   TIPO DE VIVIENDA  ");
+		if(vivienda != NULL && len > 0){
+			for(int i=0; i<len; i++){
+				if((vivienda+i)->isEmpty == OCUPADO){
+					printf("\n------------------------------------------------------------------------------------------------------");
+					printf("\n   %d    |      %d     | %s           |     %d    |      %d        |         ",
+							(vivienda+i)->idVivienda,(vivienda+i)->legajoCensista, (vivienda+i)->calle, (vivienda+i)->cantPersonas, (vivienda+i)->cantHabitaciones);
+					if((vivienda+i)->tipoVivienda == 1){
+						printf("CASA");
 					} else {
-						if((vivienda+i)->tipoVivienda == 3){
-							printf("CASILLA");
+						if((vivienda+i)->tipoVivienda == 2){
+							printf("DEPARTAMENTO");
 						} else {
-							printf("RANCHO");
+							if((vivienda+i)->tipoVivienda == 3){
+								printf("CASILLA");
+							} else {
+								printf("RANCHO");
+							}
 						}
 					}
 				}
 			}
 		}
-	}
 }
+

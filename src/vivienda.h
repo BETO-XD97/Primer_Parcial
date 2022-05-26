@@ -37,3 +37,5 @@ int modificarVivienda(eVivienda* vivienda, int len, int idMod);
 int eliminarVivienda(eVivienda* vivienda, int len, int idElim);
 
 void listaVivienda(eVivienda* vivienda, int len);
+
+void imprimirVivienda(eVivienda* vivienda, int len);

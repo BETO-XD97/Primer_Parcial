@@ -22,3 +22,5 @@ typedef struct{
 #endif /* CENSISTA_H_ */
 
 void listaCensista(eCensista* censista, int len);
+
+void imprimirCensista(eCensista* censista, int len);

@@ -77,7 +77,7 @@ int main(void) {
 							idModificado = modificarVivienda(pVivienda, TAMV, idMod);
 
 							if(idModificado == 1){
-								printf("\n\nEl usuario ha sido modificado con exito");
+								printf("\n\n\nEl usuario ha sido modificado con exito");
 							} else {
 								printf("\nEl ID de la vivienda no ha sido encontrado o no fue encontrado");
 							}
@@ -92,10 +92,16 @@ int main(void) {
 
 							idEliminado = eliminarVivienda(pVivienda, TAMV, idElim);
 
-							if(idEliminado == 1){
-								printf("\nEl usuario ha sido eliminado con exito\n");
-							} else {
-								printf("\nEl ID de la vivienda no ha sido encontrado o fue eliminado");
+							switch(idEliminado){
+							 	case 1:
+							 		printf("\nEl usuario ha sido eliminado con exito!\n");
+							 		break;
+							 	case 2:
+							 		printf("\nUsted decidio no elminar el ID de la vivienda!\n");
+							 		break;
+							 	case 3:
+							 		printf("\nEl ID de la vivienda no ha sido encontrado o ya fue eliminado!\n");
+							 		break;
 							}
 						} else {
 							printf("\nNo ha ingresado ningun dato!");
@@ -104,7 +110,7 @@ int main(void) {
 
 				case 4:
 						if(datoUno == 1){
-							listaVivienda(pVivienda, TAMV);
+							imprimirVivienda(pVivienda, TAMV);
 						} else {
 							printf("\nNo ha ingresado ningun dato!");
 						}
@@ -112,7 +118,7 @@ int main(void) {
 
 				case 5:
 
-						listaCensista(pCensista, TAMCEN);
+						imprimirCensista(pCensista, TAMCEN);
 
 					break;
 

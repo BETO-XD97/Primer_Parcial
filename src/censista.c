@@ -28,11 +28,19 @@ void listaCensista(eCensista* censista, int len){
 			}
 		}
 	}
-	printf("\n-------------------CENSISTAS-----------------------");
-	printf("\n\n  LEGAJO  |   NOMBRE  |   EDAD  | TELEFONO  ");
-	for(int i=0; i<len; i++){
-		printf("\n------------------------------------------------"
-				"\n   %d    |   %s     |   %d    | %s   ",
-				(censista+i)->legajo,(censista+i)->nombre, (censista+i)->edad,(censista+i)->telefono);
-	}
+
 }
+
+void imprimirCensista(eCensista* censista, int len){
+
+	listaCensista(censista,len);
+
+	printf("\n-------------------CENSISTAS-----------------------");
+		printf("\n\n  LEGAJO  |   NOMBRE  |   EDAD  | TELEFONO  ");
+		for(int i=0; i<len; i++){
+			printf("\n------------------------------------------------"
+					"\n   %d    |   %s     |   %d    | %s   ",
+					(censista+i)->legajo,(censista+i)->nombre, (censista+i)->edad,(censista+i)->telefono);
+		}
+}
+
