@@ -66,7 +66,7 @@ void altaVivienda(eVivienda* vivienda, int len, int idV){
 			(vivienda+i)->idVivienda = idV;
 			printf("%d", (vivienda+i)->idVivienda);
 			do{
-				valChar = rellenarChar((vivienda+i)->calle,"\n\nIngrese la calle: \n---> ", TAMC);
+				valChar = rellenarChar((vivienda+i)->calle,"\n\nIngrese la calle: \n---> ");
 			}while(valChar != 0);
 			strupr((vivienda+i)->calle);
 			rellenarInt(&(vivienda+i)->cantPersonas, "\nIngrese la cantidad de personas en la vivienda: \n---> ", "\nError! Reintente ---> ", 1, MAX);
@@ -103,7 +103,7 @@ int modificarVivienda(eVivienda* vivienda, int len, int idMod){
 						case 1:
 							printf("\nEl nombre de la calle a modificar es: %s", (vivienda+i)->calle);
 							do{
-								valChar = rellenarChar((vivienda+i)->calle,"\n\nIngrese la calle: \n---> ", TAMC);
+								valChar = rellenarChar((vivienda+i)->calle,"\n\nIngrese la calle: \n---> ");
 							}while(valChar != 0);
 							strupr((vivienda+i)->calle);
 							break;

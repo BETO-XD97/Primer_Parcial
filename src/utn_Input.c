@@ -9,7 +9,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <conio.h>
 
 #include "censista.h"
 #include "vivienda.h"
@@ -77,18 +76,19 @@ float rellenarFloat(float* inputFloat, char inputChar[], char inputError[], floa
 
 }
 
-int rellenarChar(char inputChar[], char outputChar[], int len){
+int rellenarChar(char inputChar[], char outputChar[]){
 
 	int retorno = 0;
-	if(inputChar != NULL && len >= 0){
+	if(inputChar != NULL && strlen(inputChar) > 0){
 		printf(outputChar);
 		gets(inputChar);
 		fflush(stdin);
-		for(int i=0; i<len; i++){
-			if(isalpha(inputChar[i])==0){
+
+		for(int i=0; i<strlen(inputChar); i++){
+			if(isdigit(inputChar[i]) != 0){
 				retorno = 1;
+				break;
 			}
-			break;
 		}
 		if(retorno == 1){
 			printf("\nError!");

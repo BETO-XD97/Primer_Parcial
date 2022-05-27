@@ -37,7 +37,6 @@ float rellenarFloat(float* inputFloat, char inputChar[], char inputError[], floa
  * brief Ingreso el dato alfabetico de tipo char y valido
  * @param inputChar puntero char
  * @param outputChar texto de ingreso
- * @param len tamaño del array
  * @return 1 valido 0 invalido
  */
-int rellenarChar(char inputChar[], char outputChar[], int len);
+int rellenarChar(char inputChar[], char outputChar[]);
