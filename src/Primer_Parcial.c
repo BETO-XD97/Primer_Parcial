@@ -118,8 +118,7 @@ int main(void) {
 					break;
 
 				case 5:
-
-						imprimirCensista(pCensista, TAMCEN);
+						imprimirCensista(pCensista,TAMCEN, pVivienda, TAMV);
 
 					break;
 

@@ -8,7 +8,9 @@
 #ifndef CENSISTA_H_
 #define CENSISTA_H_
 
+
 #define TAMC 25
+//#include "vivienda.h"
 
 typedef struct{
 
@@ -33,4 +35,4 @@ void listaCensista(eCensista* censista, int len);
  * @param censista
  * @param len
  */
-void imprimirCensista(eCensista* censista, int len);
+void imprimirCensista(eCensista* censista,int len,eVivienda* vivienda, int lenV);
